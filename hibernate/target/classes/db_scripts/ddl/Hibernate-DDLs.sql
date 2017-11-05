@@ -1,0 +1,73 @@
+use hibernate;
+CREATE TABLE USER_DETAILS (
+    USER_ID INTEGER NOT NULL AUTO_INCREMENT,
+    CITY VARCHAR(255),
+    COUNTRY VARCHAR(255),
+    DOOR_NO VARCHAR(255),
+    STATE VARCHAR(255),
+    STREET VARCHAR(255),
+    ZIP INTEGER,
+    EMAIL VARCHAR(255),
+    NAME VARCHAR(255),
+    PRIMARY KEY (USER_ID)
+);
+CREATE TABLE EMPLOYEE (
+    EMPLOYEE_ID INT NOT NULL AUTO_INCREMENT,
+    EMPLOYEE_NAME VARCHAR(50),
+    PRIMARY KEY (EMPLOYEE_ID)
+);
+
+CREATE TABLE CONTRACT_EMPLOYEE (
+    EMPLOYEE_ID INT,
+    PAY_PER_HOUR FLOAT,
+    CONTRACT_PERIOD VARCHAR(10)
+);
+
+ALTER TABLE CONTRACT_EMPLOYEE ADD CONSTRAINT CONTRACT_EMP_ID_FK_1 FOREIGN KEY (EMPLOYEE_ID) REFERENCES EMPLOYEE(EMPLOYEE_ID);
+
+CREATE TABLE REGULAR_EMPLOYEE (
+    EMPLOYEE_ID INT,
+    SALARY FLOAT,
+    BONUS FLOAT
+);
+
+ALTER TABLE REGULAR_EMPLOYEE ADD CONSTRAINT REGULAR_EMP_ID_FK_1 FOREIGN KEY (EMPLOYEE_ID) REFERENCES EMPLOYEE(EMPLOYEE_ID);
+
+CREATE TABLE `author` (
+    `author_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(45) NOT NULL,
+    `email` VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`author_id`)
+);
+ 
+CREATE TABLE `book` (
+    `book_id` INT(11) NOT NULL AUTO_INCREMENT,
+    `title` VARCHAR(128) NOT NULL,
+    `description` VARCHAR(512) NOT NULL,
+    `published` DATE NOT NULL,
+    `author_id` INT(11) NOT NULL,
+    PRIMARY KEY (`book_id`),
+    KEY `author_fk` (`author_id`),
+    CONSTRAINT `author_fk` FOREIGN KEY (`author_id`)
+        REFERENCES `author` (`author_id`)
+);
+
+CREATE TABLE `Cart` (
+  `cart_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `total` decimal(10,0) NOT NULL,
+  `name` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`cart_id`)
+);
+
+CREATE TABLE `Items` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `cart_id` int(11) unsigned NOT NULL,
+  `item_id` varchar(10) NOT NULL,
+  `item_total` decimal(10,0) NOT NULL,
+  `quantity` int(3) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cart_id` (`cart_id`),
+  CONSTRAINT `items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `Cart` (`cart_id`)
+);
+    
+    
